@@ -1,5 +1,5 @@
 'use strict'
-import Dispatcher from './Dispatcher';
+import dispatchMiddleWare from './dispatchMiddleWare';
 import Observer from './Observer';
 import {Component} from 'react';
 
