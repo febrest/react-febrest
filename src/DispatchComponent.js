@@ -1,36 +1,37 @@
 'use strict'
 import dispatchMiddleWare from './dispatchMiddleWare';
-import Observer from './Observer';
-import {Component} from 'react';
+import Febrest from 'febrest';
 
-class DispatchComponent extends Component{
-    constructor(...props){
-        super(...props);
-    }
-    componentDidMount() {
-        Observer.subscribe(this._onData)
-    }
-    componentWillUnmount() {
-        Observer.unsubscribe(this._onData)
-    }
-    _onData=(data)=>{
-        var result = this.onData(data);
-        if(!result && data.target==this ){
-            this.setState(data.state);
-            
-        }
-    }
-    onData(){
+var {
+    dispatch,
+    subscribe,
+    unsubscribe
+} = Febrest;
+function dispatch() {
 
-    }
-    dispatch(action,payload){
-        let data = {
-            payload:payload,
-            target:this
+}
+function createDispatchComponent(component) {
+    class DispatchComponent extends component {
+        constructor(...props) {
+            super(...props);
         }
-        Dispatcher.dispatch(action,data);
+        componentDidMount() {
+            super.componentDidMount();
+            subscribe(this._onData);
+        }
+        componentWillUnmount() {
+            super.componentWillUnmount();
+            unsubscribe(this._onData);
+        }
+        _onData = (data) => {
+            var result = this.onData && this.onData(data);
+            if (!result && data.target == this) {
+                this.setState(data.state);
+            }
+        }
     }
 }
+
 
 
 export default DispatchComponent;
