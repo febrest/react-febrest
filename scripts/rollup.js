@@ -42,7 +42,10 @@ function getOutputOptions(output, name, bundleType, exts) {
 async function build(entry, output, name, version, bundleType) {
     var result = await rollup.rollup({
         input: entry,
-        plugins:getPlugins(bundleType)
+        plugins:getPlugins(bundleType),
+        external:[
+            'febrest'
+        ]
     });
     var filename = getFileName(name, bundleType);
     output = path.resolve(output, filename);
