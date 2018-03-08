@@ -13,3 +13,5 @@ async function build(){
 }
 
 build();
+
+module.exports = build;

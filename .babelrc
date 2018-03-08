@@ -6,7 +6,8 @@
                 "modules": false
             }
         ],
-        "flow"
+        "flow",
+        "react"
     ],
     "plugins": [
         "external-helpers"
