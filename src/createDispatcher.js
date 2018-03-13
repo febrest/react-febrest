@@ -15,8 +15,8 @@ function createDispatcher(componentInst, onData) {
             return false;
         }
     }
-    function dispatch(payload) {
-        var id = Febrest.dispatch(payload);
+    function dispatch(key,payload) {
+        var id = Febrest.dispatch(key,payload);
         idMap[id] = true;
     }
     function listener(data) {
