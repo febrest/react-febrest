@@ -1,1 +1,1 @@
-module.exports = require('./dist/react-febrest')
+module.exports = require('./dist/ReactFebrest')

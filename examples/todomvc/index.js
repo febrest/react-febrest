@@ -1,23 +1,32 @@
 import Febrest from 'febrest';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ReactFebrest from './../../src';
 
+
+function Header() {
+    return (
+        <h1 className="header">
+            todos
+        </h1>
+    );
+}
 class App extends React.Component {
     render() {
         return (
-            <div class="container">
-                <h1 class="header">todos</h1>
-                <section class="main">
-                    <p class="new-todo-container">
-                        <input class="new-todo" placeholder="需要做什么？" />
+            <div className="container">
+                <Header />
+                <section className="main">
+                    <p className="new-todo-container">
+                        <input className="new-todo" placeholder="需要做什么？" />
                     </p>
-                    <ul class="list">
+                    <ul className="list">
                     </ul>
-                    <footer class="selector">
-                        <p class="filters">
+                    <footer className="selector">
+                        <p className="filters">
                             <span
                                 fbclick="app.changeType('all')"
-                                class="all selected">all
+                                className="all selected">all
                     </span>
                             <span
                                 fbclick="app.changeType('active')">
@@ -35,5 +44,5 @@ class App extends React.Component {
     }
 }
 
-ReactDOM.render(<App />,document.getElementById('react-placeholder'));
+ReactDOM.render(<App />, document.getElementById('react-placeholder'));
 
