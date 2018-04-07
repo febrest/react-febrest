@@ -3,14 +3,15 @@ import Febrest from 'febrest';
 
 var {
     subscribe,
-    unsubscribe
+    unsubscribe,
+    watch,
 } = Febrest;
 
-function createDispatcher(componentInst, onData) {
+function createDispatcher(componentInst, onDispatch) {
     var idMap = {};
-    function _onData(data, isThis) {
-        if (onData) {
-            return onData.call(componentInst, data, isThis);
+    function _onDispatch(data, isThis) {
+        if (onDispatch) {
+            return onDispatch.call(componentInst, data, isThis);
         } else {
             return false;
         }
@@ -23,7 +24,7 @@ function createDispatcher(componentInst, onData) {
     function listener(data) {
         var id = data.id;
         var isThis = !!idMap[id];
-        var result = _onData(data, isThis);
+        var result = _onDispatch(data, isThis);
         if (!result && isThis) {
             componentInst.setState(data.state);
         }
@@ -36,7 +37,8 @@ function createDispatcher(componentInst, onData) {
     }
     return {
         dispatch,
-        release
+        release,
+        watch:Febrest.watch
     }
 }
 
