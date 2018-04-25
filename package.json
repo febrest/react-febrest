@@ -1,6 +1,6 @@
 {
     "name": "react-febrest",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "author": {
         "name": "Spencer Ye",
         "email": "pallyoung@163.com"
@@ -23,7 +23,7 @@
         "babel-preset-flow": "^6.23.0",
         "babel-preset-react": "^6.24.1",
         "babel-preset-stage-2": "^6.24.1",
-        "febrest": "0.0.4",
+        "febrest": "^0.3.3-beta",
         "gulp": "^3.9.1",
         "gulp-connect": "^5.5.0",
         "react": "^16.2.0",

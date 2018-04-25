@@ -5,10 +5,13 @@ var {
     subscribe,
     unsubscribe,
     watch,
+    removeWatcher,
+    applyMiddleWare
 } = Febrest;
 
 function createDispatcher(componentInst, onDispatch) {
     var idMap = {};
+    var callbacks = [];
     function _onDispatch(data, isThis) {
         if (onDispatch) {
             return onDispatch.call(componentInst, data, isThis);
@@ -21,6 +24,18 @@ function createDispatcher(componentInst, onDispatch) {
         idMap[id] = true;
         return id;
     }
+    function onWatch(change){
+        callbacks.forEach((cb)=>{
+            cb(change);
+        });
+    }
+    function watchIt(callback){
+        callbacks.push(callback);
+    }
+    function removeWatch(){
+        callbacks = [];
+        removeWatcher(onWatch);
+    }
     function listener(data) {
         var id = data.id;
         var isThis = !!idMap[id];
@@ -31,14 +46,16 @@ function createDispatcher(componentInst, onDispatch) {
         delete idMap[id];
     }
     subscribe(listener);
+    watch(onWatch);
     function release() {
         idMap = null;
         unsubscribe(listener);
+        removeWatch();
     }
     return {
         dispatch,
         release,
-        watch:Febrest.watch
+        watch:watchIt
     }
 }
 
