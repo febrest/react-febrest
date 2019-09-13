@@ -1,6 +1,6 @@
 {
     "name": "react-febrest",
-    "version": "0.2.0",
+    "version": "0.11.0",
     "author": {
         "name": "Spencer Ye",
         "email": "pallyoung@163.com"
@@ -15,7 +15,7 @@
         "publish": "node ./scripts/publish.js"
     },
     "main": "index.js",
-    "license": "Apache 2.0",
+    "license": "Apache-2.0",
     "devDependencies": {
         "babel-core": "^6.26.0",
         "babel-plugin-external-helpers": "^6.22.0",
@@ -23,11 +23,11 @@
         "babel-preset-flow": "^6.23.0",
         "babel-preset-react": "^6.24.1",
         "babel-preset-stage-2": "^6.24.1",
-        "febrest": "^0.3.3-beta",
+        "febrest": "^0.11.11-autumn",
         "gulp": "^3.9.1",
         "gulp-connect": "^5.5.0",
-        "react": "^16.2.0",
-        "react-dom": "^16.2.0",
+        "react": "^16.9.0",
+        "react-dom": "^16.9.0",
         "rollup": "*",
         "rollup-plugin-babel": "^3.0.3",
         "rollup-plugin-commonjs": "^8.3.0",
