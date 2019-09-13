@@ -34,7 +34,7 @@ export function contextForState(...states) {
       this._index = 0;
     }
     componentDidMount() {
-      listeners.push(l);
+      listeners.push(this);
       this._index = listeners.length - 1;
     }
     componentWillUnmount() {
