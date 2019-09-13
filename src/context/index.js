@@ -9,11 +9,15 @@ function getStates(states) {
   return data;
 }
 
-export function contextForState(...states) {
+export function contextForState(states,initialize) {
+  if(typeof states === 'string') {
+    states = [states];
+  }
   const defaultStates = getStates(states);
   const context = createContext(defaultStates);
   const { Provider } = context;
   const listeners = [];
+  let inited = false;
   State.observe(function({ key, current }) {
     if (states.indexOf(key) !== -1) {
       defaultStates[key] = current;
@@ -35,6 +39,10 @@ export function contextForState(...states) {
     }
     componentDidMount() {
       listeners.push(this);
+      if(!inited && initialize) {
+        initialize(defaultStates);
+        inited = false;
+      }
       this._index = listeners.length - 1;
     }
     componentWillUnmount() {
