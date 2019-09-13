@@ -1,12 +1,10 @@
-'use strict'
-import createDispatcher from './createDispatcher';
+"use strict";
+import { contextForState } from "./context";
 var version;
-try{
-    version = VERSION;
-}catch(e){
-
-}
+try {
+  version = VERSION;
+} catch (e) {}
 export default {
-    createDispatcher,
-    version
-}
+  version,
+  contextForState
+};
