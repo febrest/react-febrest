@@ -8,6 +8,13 @@ function getStates(states) {
   });
   return data;
 }
+function copy(source) {
+  const dest = {};
+  for(let o in source) {
+    dest[o] = source[o];
+  }
+  return dest;
+}
 
 export function contextForState(states, { initialize, duration }) {
   if (typeof states === "string") {
@@ -39,6 +46,7 @@ export function contextForState(states, { initialize, duration }) {
   State.observe(function({ key, current }) {
     if (states.indexOf(key) !== -1) {
       defaultStates[key] = current;
+      defaultStates = copy(defaultStates);
       listeners.forEach(l => {
         l && l._update(defaultStates);
       });
@@ -69,7 +77,7 @@ export function contextForState(states, { initialize, duration }) {
       cancelCheckUpdate();
     }
     _update(provider) {
-      this.setState({ provider: Object.assign({}, provider) });
+      this.setState({ provider });
     }
     render() {
       const { children } = this.props;
