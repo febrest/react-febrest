@@ -69,7 +69,7 @@ export function contextForState(states, { initialize, duration }) {
       cancelCheckUpdate();
     }
     _update(provider) {
-      this.setState({ provider });
+      this.setState({ provider:{...provider} });
     }
     render() {
       const { children } = this.props;
