@@ -20,7 +20,7 @@ export function contextForState(states, { initialize, duration }) {
   if (typeof states === "string") {
     states = [states];
   }
-  let defaultStates = getStates(states);
+  const defaultStates = getStates(states);
   const context = createContext(defaultStates);
   const { Provider } = context;
   const listeners = [];
@@ -46,7 +46,6 @@ export function contextForState(states, { initialize, duration }) {
   State.observe(function({ key, current }) {
     if (states.indexOf(key) !== -1) {
       defaultStates[key] = current;
-      defaultStates = copy(defaultStates);
       listeners.forEach(l => {
         l && l._update(defaultStates);
       });
@@ -77,7 +76,7 @@ export function contextForState(states, { initialize, duration }) {
       cancelCheckUpdate();
     }
     _update(provider) {
-      this.setState({ provider });
+      this.setState({ provider:copy(provider) });
     }
     render() {
       const { children } = this.props;
