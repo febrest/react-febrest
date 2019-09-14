@@ -21,19 +21,19 @@ export function contextForState(states, { initialize, duration }) {
   let inited = false;
   let timeoutHanlder;
   function autoUpdate() {
-    initialize()
-    timeoutHanlder = setTimeout(autoUpdate,duration)
+    initialize();
+    timeoutHanlder = setTimeout(autoUpdate, duration);
   }
   function startCheckUpdate() {
     instCount++;
-    if(instCount>=1 && duration && initialize) {
-      timeoutHanlder = setTimeout(autoUpdate,duration)
+    if (instCount >= 1 && duration && initialize) {
+      timeoutHanlder = setTimeout(autoUpdate, duration);
     }
   }
   function cancelCheckUpdate() {
     instCount--;
-    if(instCount<=0) {
-      clearTimeout(timeoutHanlder)
+    if (instCount <= 0) {
+      clearTimeout(timeoutHanlder);
     }
   }
   State.observe(function({ key, current }) {
@@ -69,7 +69,7 @@ export function contextForState(states, { initialize, duration }) {
       cancelCheckUpdate();
     }
     _update(provider) {
-      this.setState({ provider:{...provider} });
+      this.setState({ provider: Object.assign({}, provider) });
     }
     render() {
       const { children } = this.props;
