@@ -20,7 +20,7 @@ export function contextForState(states, { initialize, duration }) {
   if (typeof states === "string") {
     states = [states];
   }
-  const defaultStates = getStates(states);
+  let defaultStates = getStates(states);
   const context = createContext(defaultStates);
   const { Provider } = context;
   const listeners = [];
