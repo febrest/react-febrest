@@ -9,15 +9,33 @@ function getStates(states) {
   return data;
 }
 
-export function contextForState(states,initialize) {
-  if(typeof states === 'string') {
+export function contextForState(states, { initialize, duration }) {
+  if (typeof states === "string") {
     states = [states];
   }
   const defaultStates = getStates(states);
   const context = createContext(defaultStates);
   const { Provider } = context;
   const listeners = [];
+  let instCount = 0;
   let inited = false;
+  let timeoutHanlder;
+  function autoUpdate() {
+    initialize()
+    timeoutHanlder = setTimeout(autoUpdate,duration)
+  }
+  function startCheckUpdate() {
+    instCount++;
+    if(instCount>=1 && duration && initialize) {
+      timeoutHanlder = setTimeout(autoUpdate,duration)
+    }
+  }
+  function cancelCheckUpdate() {
+    instCount--;
+    if(instCount<=0) {
+      clearTimeout(timeoutHanlder)
+    }
+  }
   State.observe(function({ key, current }) {
     if (states.indexOf(key) !== -1) {
       defaultStates[key] = current;
@@ -39,14 +57,16 @@ export function contextForState(states,initialize) {
     }
     componentDidMount() {
       listeners.push(this);
-      if(!inited && initialize) {
+      if (!inited && initialize) {
         initialize(defaultStates);
         inited = false;
       }
+      startCheckUpdate();
       this._index = listeners.length - 1;
     }
     componentWillUnmount() {
       delete listeners[this._index];
+      cancelCheckUpdate();
     }
     _update(provider) {
       this.setState({ provider });
