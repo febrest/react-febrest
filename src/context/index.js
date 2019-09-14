@@ -1,5 +1,5 @@
-import React, { createContext, PureComponent } from "react";
-import { State } from "febrest";
+import React, { createContext, PureComponent } from 'react';
+import { State } from 'febrest';
 function getStates(states) {
   const data = {};
 
@@ -10,19 +10,20 @@ function getStates(states) {
 }
 function copy(source) {
   const dest = {};
-  for(let o in source) {
+  for (let o in source) {
     dest[o] = source[o];
   }
   return dest;
 }
 
-export function contextForState(states, { initialize, duration }) {
-  if (typeof states === "string") {
+export function contextForState(states, config = {}) {
+  if (typeof states === 'string') {
     states = [states];
   }
+  const { initialize, duration } = config;
   const defaultStates = getStates(states);
   const context = createContext(defaultStates);
-  const { Provider } = context;
+  const { Provider, Consumer } = context;
   const listeners = [];
   let instCount = 0;
   let inited = false;
@@ -51,7 +52,8 @@ export function contextForState(states, { initialize, duration }) {
       });
     }
   });
-  class StateProvider extends PureComponent {
+  class StateConsumer extends PureComponent {
+    // static typ = Consumer.type;
     constructor(props) {
       super(props);
       // const {value} = props;
@@ -76,15 +78,22 @@ export function contextForState(states, { initialize, duration }) {
       cancelCheckUpdate();
     }
     _update(provider) {
-      this.setState({ provider:copy(provider) });
+      this.setState({ provider: copy(provider) });
     }
     render() {
       const { children } = this.props;
       const { provider } = this.state;
-      return <Provider value={provider}>{children}</Provider>;
+      return (
+        <Provider value={provider}>
+          <Consumer>{children}</Consumer>
+        </Provider>
+      );
     }
   }
-  context.Provider = StateProvider;
-
+  context.Provider = null;
+  context.Consumer = StateConsumer;
+  context.forceUpdate = function() {
+    initialize && initialize();
+  };
   return context;
 }
